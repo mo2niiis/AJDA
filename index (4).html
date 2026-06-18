@@ -1,0 +1,2460 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AJDA Coffee & Bakery — Specialty Coffee, 24/7, Irbid</title>
+<meta name="description" content="AJDA Coffee & Bakery — Specialty coffee, fresh pastries, and a community that never sleeps. Open 24 hours in Irbid, Jordan. The Returning Vibes." />
+<meta name="theme-color" content="#0A0A0A" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Reem+Kufi:wght@400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<style>
+/* ====================================================
+   AJDA — DESIGN TOKENS
+   Inspired by industrial corrugated metal walls,
+   vibrant brand red, and a community that never sleeps.
+   ==================================================== */
+:root{
+  /* Brand palette — pulled from AJDA's signature red + ink black */
+  --red:        #E11D2A;        /* AJDA red */
+  --red-deep:   #B8111C;        /* deep red for shadows */
+  --red-bright: #FF2A38;        /* highlight */
+  --red-soft:   #FFE5E7;        /* tint */
+  --red-glow:   rgba(225,29,42,.22);
+
+  --ink:        #0A0A0A;        /* near-black */
+  --ink-2:      #141414;
+  --noir:       #1C1C1C;        /* dark surface */
+  --charcoal:   #262626;
+  --steel:      #3A3A3A;
+  --concrete:   #737373;
+  --smoke:      #D4D4D4;
+  --fog:        #EFEFEF;
+  --paper:      #FAFAF7;
+  --cream:      #F5F1EA;
+  --white:      #FFFFFF;
+
+  --line:       rgba(10,10,10,.08);
+  --line-dark:  rgba(255,255,255,.10);
+  --line-red:   rgba(225,29,42,.25);
+
+  --shadow-sm:  0 2px 10px rgba(10,10,10,.06);
+  --shadow-md:  0 16px 40px -10px rgba(10,10,10,.18);
+  --shadow-lg:  0 30px 80px -20px rgba(10,10,10,.4);
+  --shadow-red: 0 20px 50px -12px rgba(225,29,42,.55);
+
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --ease-bounce: cubic-bezier(.34,1.56,.64,1);
+
+  /* Typography */
+  --display:    'Anton', 'Bebas Neue', 'Archivo Black', sans-serif;
+  --heavy:      'Archivo Black', sans-serif;
+  --body:       'Outfit', 'Space Grotesk', system-ui, sans-serif;
+  --head:       'Space Grotesk', sans-serif;
+  --script:     'Caveat', cursive;
+  --arabic-d:   'Reem Kufi', sans-serif;
+  --arabic-b:   'Amiri', serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--ink)}
+body{
+  font-family:var(--body);
+  font-weight:300;
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:0;background:none}
+::selection{background:var(--red);color:var(--white)}
+
+/* ====================================================
+   NOISE + CORRUGATED TEXTURES
+   ==================================================== */
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.30 0'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.5'/></svg>");
+  opacity:.4;pointer-events:none;z-index:1;mix-blend-mode:multiply;
+}
+.metal{
+  background-color:var(--ink);
+  background-image:
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,.05) 0px,
+      rgba(255,255,255,.05) 1.5px,
+      transparent 1.5px,
+      transparent 7px),
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent 35%);
+}
+.paper{
+  background-color:var(--paper);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(225,29,42,.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 90%, rgba(225,29,42,.03) 0%, transparent 50%);
+}
+
+/* ====================================================
+   PRELOADER — logo draws itself
+   ==================================================== */
+.preloader{
+  position:fixed;inset:0;
+  background:var(--ink);
+  z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:32px;
+  transition:opacity 1s var(--ease), visibility 1s var(--ease);
+}
+.preloader.gone{opacity:0;visibility:hidden;pointer-events:none}
+.preloader-logo{
+  font-family:var(--display);
+  font-size:clamp(72px,14vw,120px);
+  color:var(--white);
+  letter-spacing:.04em;
+  line-height:1;
+  display:flex;align-items:baseline;gap:2px;
+  position:relative;
+}
+.preloader-logo .a{color:var(--red);font-style:italic}
+.preloader-bar{
+  width:240px;height:2px;
+  background:rgba(255,255,255,.08);
+  overflow:hidden;position:relative;
+}
+.preloader-bar::after{
+  content:"";position:absolute;inset:0;background:var(--red);
+  transform-origin:left;
+  animation:preload 1.6s var(--ease) infinite;
+}
+@keyframes preload{
+  0%{transform:scaleX(0);transform-origin:left}
+  50%{transform:scaleX(1);transform-origin:left}
+  51%{transform:scaleX(1);transform-origin:right}
+  100%{transform:scaleX(0);transform-origin:right}
+}
+.preloader-sub{
+  font-family:var(--script);
+  font-size:22px;
+  color:var(--red);
+  letter-spacing:.04em;
+}
+.preloader-tag{
+  font-size:9px;letter-spacing:.5em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);font-weight:500;
+}
+
+/* ====================================================
+   NAV
+   ==================================================== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:24px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all .4s var(--ease);
+}
+.nav.solid{
+  background:rgba(10,10,10,.94);
+  backdrop-filter:blur(20px) saturate(1.2);
+  -webkit-backdrop-filter:blur(20px) saturate(1.2);
+  padding:14px 48px;
+  border-bottom:1px solid var(--line-dark);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  color:var(--white);
+  position:relative;
+}
+.nav-logo-mark{
+  width:38px;height:38px;
+  background:var(--red);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);
+  font-size:22px;
+  color:var(--white);
+  letter-spacing:.02em;
+  position:relative;
+  transform:rotate(-3deg);
+  transition:transform .4s var(--ease-bounce);
+}
+.nav-logo:hover .nav-logo-mark{transform:rotate(0deg) scale(1.05)}
+.nav-logo-mark::after{
+  content:"";position:absolute;inset:3px;
+  border:1px solid rgba(255,255,255,.3);
+}
+.nav-logo-text{
+  font-family:var(--display);
+  font-size:24px;
+  letter-spacing:.05em;
+  text-transform:lowercase;
+}
+.nav-logo-text em{color:var(--red);font-style:normal}
+@media(max-width:880px){.nav-logo-mark{width:32px;height:32px;font-size:18px}.nav-logo-text{font-size:20px}}
+.nav-links{display:flex;gap:38px;align-items:center}
+.nav-link{
+  font-size:11px;font-weight:500;letter-spacing:.24em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.85);
+  position:relative;padding:6px 0;
+  transition:color .3s var(--ease);
+}
+.nav-link::after{
+  content:"";position:absolute;left:0;bottom:0;
+  width:0;height:2px;background:var(--red);
+  transition:width .4s var(--ease);
+}
+.nav-link:hover{color:var(--white)}
+.nav-link:hover::after{width:100%}
+.nav-order{
+  padding:13px 24px;
+  background:var(--red);
+  color:var(--white);
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  font-weight:600;
+  transition:all .3s var(--ease);
+  display:inline-flex;align-items:center;gap:10px;
+  position:relative;
+  overflow:hidden;
+}
+.nav-order::before{
+  content:"";position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+  transition:left .6s var(--ease);
+}
+.nav-order:hover::before{left:100%}
+.nav-order:hover{background:var(--red-deep);transform:translateY(-1px);box-shadow:var(--shadow-red)}
+.nav-toggle{display:none}
+@media (max-width:880px){
+  .nav{padding:18px 22px}
+  .nav.solid{padding:12px 22px}
+  .nav-links{display:none}
+  .nav-toggle{
+    display:flex;flex-direction:column;gap:5px;
+    width:30px;z-index:200;padding:6px;
+  }
+  .nav-toggle span{height:2px;background:var(--white);transition:all .3s var(--ease)}
+  .nav-links.mobile-open{
+    display:flex;position:fixed;inset:0;
+    background:var(--ink);
+    flex-direction:column;align-items:center;justify-content:center;
+    gap:36px;z-index:150;
+  }
+  .nav-links.mobile-open .nav-link{font-size:24px;letter-spacing:.3em;color:var(--white)}
+  .nav-links.mobile-open .nav-order{font-size:14px;padding:18px 32px}
+}
+
+/* ====================================================
+   HERO — The big wow moment
+   ==================================================== */
+.hero{
+  position:relative;
+  min-height:100vh;min-height:100dvh;
+  background:var(--ink);
+  color:var(--white);
+  overflow:hidden;
+  isolation:isolate;
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  align-items:center;
+}
+.hero::before{
+  content:"";
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  background-image:
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,.04) 0px,
+      rgba(255,255,255,.04) 1.5px,
+      transparent 1.5px,
+      transparent 7px);
+  pointer-events:none;z-index:1;
+}
+.hero::after{
+  content:"";
+  position:absolute;top:0;right:0;
+  width:50%;height:100%;
+  background:linear-gradient(135deg, transparent 50%, var(--red-glow) 100%);
+  pointer-events:none;z-index:1;
+}
+.hero-content{
+  position:relative;z-index:3;
+  padding:140px 48px 140px 64px;
+  max-width:780px;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:14px;
+  font-size:11px;letter-spacing:.45em;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:32px;
+  font-weight:500;
+  opacity:0;animation:fadeUp 1s var(--ease) .3s forwards;
+}
+.hero-eyebrow::before, .hero-eyebrow::after{
+  content:"";width:36px;height:2px;background:var(--red);
+}
+.hero-title{
+  font-family:var(--display);
+  font-size:clamp(80px,13vw,200px);
+  line-height:.86;
+  letter-spacing:-.005em;
+  margin-bottom:8px;
+  text-transform:lowercase;
+  position:relative;
+}
+.hero-title .word{
+  display:block;
+  opacity:0;animation:wordIn 1.2s var(--ease) forwards;
+}
+.hero-title .word:nth-child(1){animation-delay:.5s}
+.hero-title .word:nth-child(2){animation-delay:.75s;color:var(--red)}
+.hero-title .word:nth-child(3){animation-delay:1s;-webkit-text-stroke:2px var(--white);color:transparent}
+@keyframes wordIn{
+  from{opacity:0;transform:translateY(60px) skewY(8deg)}
+  to{opacity:1;transform:translateY(0) skewY(0)}
+}
+.hero-script{
+  font-family:var(--script);
+  font-size:clamp(36px,5vw,56px);
+  color:var(--red);
+  margin:20px 0 28px;
+  transform:rotate(-2deg);
+  display:inline-block;
+  opacity:0;animation:fadeUp 1.2s var(--ease) 1.3s forwards;
+  position:relative;
+  line-height:1;
+}
+.hero-script::before, .hero-script::after{
+  content:"";position:absolute;top:50%;
+  width:60px;height:1px;background:var(--red);
+}
+.hero-script::before{right:calc(100% + 20px)}
+.hero-script::after{left:calc(100% + 20px)}
+.hero-title-ar{
+  font-family:var(--arabic-d);
+  font-weight:500;
+  font-size:clamp(20px,2.2vw,28px);
+  color:rgba(255,255,255,.65);
+  margin:24px 0 36px;
+  direction:rtl;
+  opacity:0;animation:fadeUp 1.2s var(--ease) 1.5s forwards;
+}
+.hero-tagline{
+  font-family:var(--head);
+  font-size:15px;line-height:1.7;
+  color:rgba(255,255,255,.7);
+  max-width:480px;
+  margin-bottom:40px;
+  font-weight:300;
+  opacity:0;animation:fadeUp 1.2s var(--ease) 1.7s forwards;
+}
+.hero-cta-row{
+  display:flex;gap:14px;flex-wrap:wrap;
+  opacity:0;animation:fadeUp 1.2s var(--ease) 1.9s forwards;
+}
+.btn{
+  padding:18px 32px;
+  font-size:11px;letter-spacing:.3em;
+  text-transform:uppercase;font-weight:600;
+  transition:all .4s var(--ease);
+  display:inline-flex;align-items:center;gap:12px;
+  border:2px solid transparent;
+  position:relative;
+  overflow:hidden;
+}
+.btn-primary{background:var(--red);color:var(--white);border-color:var(--red)}
+.btn-primary::before{
+  content:"";position:absolute;inset:0;
+  background:var(--red-deep);
+  transform:translateY(100%);
+  transition:transform .4s var(--ease);
+  z-index:0;
+}
+.btn-primary:hover::before{transform:translateY(0)}
+.btn-primary span{position:relative;z-index:1;display:inline-flex;align-items:center;gap:12px}
+.btn-primary:hover{box-shadow:var(--shadow-red)}
+.btn-ghost{border-color:rgba(255,255,255,.3);color:var(--white)}
+.btn-ghost:hover{background:var(--white);color:var(--ink);border-color:var(--white)}
+
+/* Hero visual */
+.hero-visual{
+  position:relative;
+  height:100%;
+  display:flex;align-items:center;justify-content:center;
+  padding:120px 64px 120px 24px;
+  z-index:2;
+}
+.hero-cups{
+  position:relative;
+  width:100%;
+  max-width:520px;
+  aspect-ratio:1/1;
+}
+.cup{
+  position:absolute;
+  background:linear-gradient(180deg, #FF2A38 0%, #B8111C 100%);
+  border-radius:8px 8px 14px 14px;
+  box-shadow:
+    0 30px 60px -10px rgba(225,29,42,.5),
+    0 10px 30px -5px rgba(0,0,0,.4),
+    inset 0 -8px 0 rgba(0,0,0,.1),
+    inset 0 4px 0 rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.cup::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:18px;
+  background:linear-gradient(180deg, rgba(0,0,0,.15), transparent);
+}
+.cup::after{
+  content:"";position:absolute;
+  left:50%;top:-12px;transform:translateX(-50%);
+  width:30px;height:14px;
+  background:radial-gradient(ellipse, rgba(0,0,0,.2), transparent 70%);
+  border-radius:50%;
+}
+.cup-logo{
+  font-family:var(--display);
+  color:var(--white);
+  letter-spacing:.04em;
+  text-transform:lowercase;
+  text-align:center;
+  line-height:.95;
+  position:relative;z-index:2;
+}
+.cup-logo .ar{
+  font-family:var(--arabic-d);
+  display:block;
+  font-size:1em;
+  margin-bottom:2px;
+  font-weight:700;
+}
+.cup-logo .en{
+  font-size:.55em;
+  letter-spacing:.06em;
+  display:block;
+  opacity:.95;
+}
+.cup-1{
+  width:62%;height:75%;
+  top:8%;left:0;
+  transform:rotate(-6deg);
+  animation:cupFloat 6s ease-in-out infinite;
+}
+.cup-1 .cup-logo{font-size:clamp(28px,3.5vw,42px)}
+.cup-2{
+  width:55%;height:68%;
+  bottom:0;right:0;
+  transform:rotate(8deg);
+  animation:cupFloat 6s ease-in-out infinite 2s;
+  background:linear-gradient(180deg, #1C1C1C 0%, #0A0A0A 100%);
+  box-shadow:
+    0 30px 60px -10px rgba(0,0,0,.6),
+    inset 0 -8px 0 rgba(255,255,255,.05),
+    inset 0 4px 0 rgba(255,255,255,.05);
+}
+.cup-2::before{background:linear-gradient(180deg, rgba(255,255,255,.06), transparent)}
+.cup-2::after{background:radial-gradient(ellipse, rgba(0,0,0,.4), transparent 70%)}
+.cup-2 .cup-logo{font-size:clamp(24px,3vw,36px)}
+@keyframes cupFloat{
+  0%,100%{transform:rotate(-6deg) translateY(0)}
+  50%{transform:rotate(-6deg) translateY(-12px)}
+}
+.cup-2{animation-name:cupFloat2}
+@keyframes cupFloat2{
+  0%,100%{transform:rotate(8deg) translateY(0)}
+  50%{transform:rotate(8deg) translateY(-14px)}
+}
+/* Steam */
+.steam{
+  position:absolute;top:-20px;left:50%;
+  transform:translateX(-50%);
+  width:60%;height:30px;
+  pointer-events:none;
+}
+.steam span{
+  position:absolute;
+  bottom:0;
+  width:8px;height:30px;
+  background:rgba(255,255,255,.3);
+  border-radius:50%;
+  filter:blur(4px);
+  animation:steam 3s ease-in-out infinite;
+}
+.steam span:nth-child(1){left:20%;animation-delay:0s}
+.steam span:nth-child(2){left:50%;animation-delay:.5s}
+.steam span:nth-child(3){left:75%;animation-delay:1s}
+@keyframes steam{
+  0%{transform:translateY(0) scaleY(1);opacity:0}
+  50%{opacity:.7}
+  100%{transform:translateY(-40px) scaleY(1.4);opacity:0}
+}
+/* Decorative beans */
+.bean{
+  position:absolute;
+  width:14px;height:20px;
+  background:radial-gradient(ellipse at 30% 30%, #4A2A1A, #2A1810);
+  border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+  pointer-events:none;
+  opacity:0;animation:beanFloat 8s linear infinite;
+}
+.bean::after{
+  content:"";position:absolute;
+  top:20%;left:50%;
+  width:1px;height:60%;
+  background:rgba(0,0,0,.5);
+  transform:translateX(-50%) rotate(-5deg);
+}
+.bean:nth-child(1){top:80%;left:10%;animation-delay:0s}
+.bean:nth-child(2){top:60%;left:90%;animation-delay:1.5s;width:10px;height:14px}
+.bean:nth-child(3){top:90%;left:50%;animation-delay:3s;width:16px;height:22px}
+.bean:nth-child(4){top:30%;left:5%;animation-delay:4.5s;width:12px;height:18px}
+.bean:nth-child(5){top:50%;left:95%;animation-delay:6s;width:10px;height:14px}
+@keyframes beanFloat{
+  0%{transform:translateY(0) rotate(0);opacity:0}
+  10%{opacity:1}
+  90%{opacity:1}
+  100%{transform:translateY(-120vh) rotate(720deg);opacity:0}
+}
+
+/* Bottom marquee */
+.hero-marquee{
+  position:absolute;bottom:0;left:0;right:0;z-index:4;
+  background:var(--red);
+  color:var(--white);
+  padding:18px 0;
+  overflow:hidden;
+  white-space:nowrap;
+  border-top:2px solid var(--white);
+  border-bottom:2px solid var(--white);
+}
+.hero-marquee-inner{
+  display:inline-flex;gap:50px;
+  animation:scrollStrip 35s linear infinite;
+  padding-left:50px;
+  font-family:var(--display);
+  font-size:14px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+.hero-marquee-inner span{display:inline-flex;align-items:center;gap:14px}
+.hero-marquee-inner em{font-style:normal;color:var(--ink);background:var(--white);width:8px;height:8px;border-radius:50%;display:inline-block}
+@keyframes scrollStrip{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+.hero-scroll{
+  position:absolute;bottom:90px;left:64px;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-size:9px;letter-spacing:.4em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);
+  z-index:4;
+  opacity:0;animation:fadeUp 1.2s var(--ease) 2.1s forwards;
+}
+.hero-scroll-line{width:1px;height:40px;background:rgba(255,255,255,.3);position:relative;overflow:hidden}
+.hero-scroll-line::after{
+  content:"";position:absolute;top:0;left:0;width:100%;height:50%;
+  background:var(--red);
+  animation:scrollLine 2s var(--ease) infinite;
+}
+@keyframes scrollLine{
+  0%{transform:translateY(-100%)}
+  100%{transform:translateY(200%)}
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(max-width:880px){
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:120px}
+  .hero-content{padding:0 24px 60px;max-width:100%}
+  .hero-visual{height:auto;padding:40px 24px 80px;justify-content:center}
+  .hero-cups{max-width:340px}
+  .hero-marquee{padding:14px 0}
+  .hero-marquee-inner{font-size:11px;gap:36px}
+  .hero-scroll{display:none}
+}
+
+/* ====================================================
+   STATS RIBBON
+   ==================================================== */
+.stats{
+  background:var(--ink);
+  color:var(--white);
+  padding:80px 48px;
+  border-top:1px solid var(--line-dark);
+  border-bottom:1px solid var(--line-dark);
+  position:relative;z-index:2;
+}
+.stats-grid{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:32px;text-align:center;
+  position:relative;
+}
+.stats-grid::before, .stats-grid::after{
+  content:"";position:absolute;top:50%;
+  width:1px;height:80px;background:var(--line-dark);
+  transform:translateY(-50%);
+}
+.stats-grid::before{left:25%}
+.stats-grid::after{right:25%}
+.stat-num{
+  font-family:var(--display);
+  font-size:clamp(48px,6vw,80px);
+  line-height:1;
+  color:var(--red);
+  display:flex;align-items:baseline;justify-content:center;gap:4px;
+  margin-bottom:14px;
+}
+.stat-num small{font-size:.32em;color:var(--white);font-family:var(--head);font-weight:400;letter-spacing:.1em;text-transform:uppercase;align-self:center}
+.stat-label{
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);font-weight:500;
+}
+@media(max-width:680px){
+  .stats{padding:60px 24px}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:48px 24px}
+  .stats-grid::before, .stats-grid::after{display:none}
+}
+
+/* ====================================================
+   SECTION COMMONS
+   ==================================================== */
+section{position:relative;z-index:2}
+.eyebrow{
+  display:inline-block;
+  font-size:11px;letter-spacing:.4em;
+  text-transform:uppercase;
+  color:var(--red);
+  font-weight:600;
+  margin-bottom:24px;
+  position:relative;
+  padding-left:52px;
+}
+.eyebrow::before{content:"";position:absolute;left:0;top:50%;width:36px;height:2px;background:var(--red);transform:translateY(-50%)}
+.section-title{
+  font-family:var(--display);
+  font-size:clamp(48px,8vw,120px);
+  line-height:.92;
+  letter-spacing:-.005em;
+  color:var(--ink);
+  margin-bottom:28px;
+  text-transform:lowercase;
+}
+.section-title .red{color:var(--red)}
+.section-title .stroke{
+  -webkit-text-stroke:2px var(--ink);
+  color:transparent;
+}
+.section-title .white{color:var(--white)}
+.section-title em{font-style:normal;color:var(--red)}
+.section-lead{
+  font-size:17px;line-height:1.65;
+  color:var(--concrete);
+  max-width:540px;
+  font-weight:300;
+}
+.section-lead.light{color:rgba(255,255,255,.75)}
+
+/* ====================================================
+   ABOUT
+   ==================================================== */
+.about{
+  background:var(--white);
+  padding:160px 48px;
+  position:relative;
+  overflow:hidden;
+}
+.about::before{
+  content:"AJDA";
+  position:absolute;
+  bottom:-100px;right:-50px;
+  font-family:var(--display);
+  font-size:clamp(260px,38vw,520px);
+  color:var(--fog);
+  line-height:1;
+  letter-spacing:-.04em;
+  pointer-events:none;
+  z-index:0;
+  opacity:.7;
+}
+.about-grid{
+  max-width:1320px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:100px;align-items:center;
+  position:relative;z-index:2;
+}
+.about-text{padding-right:24px}
+.about-ar{
+  font-family:var(--arabic-b);
+  font-size:26px;line-height:1.95;
+  color:var(--ink);
+  direction:rtl;text-align:right;
+  font-style:italic;
+  padding:36px 0;
+  border-top:3px solid var(--ink);
+  border-bottom:3px solid var(--red);
+  margin:36px 0;
+  position:relative;
+}
+.about-ar::before{
+  content:"\201C";
+  font-family:var(--display);
+  position:absolute;top:-30px;right:0;
+  font-size:80px;color:var(--red);
+  line-height:1;font-style:normal;
+}
+.about-pill-row{
+  display:flex;gap:14px;flex-wrap:wrap;margin-top:32px;
+}
+.about-pill{
+  padding:10px 18px;
+  border:2px solid var(--ink);
+  font-family:var(--head);
+  font-size:10px;letter-spacing:.25em;
+  text-transform:uppercase;font-weight:600;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.about-pill .dot{width:8px;height:8px;background:var(--red);border-radius:50%}
+.about-visual{
+  position:relative;
+  aspect-ratio:4/5;
+  overflow:hidden;
+  background:var(--ink);
+}
+.about-visual img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform 1.2s var(--ease);
+  filter:contrast(1.05) saturate(.95);
+}
+.about-visual:hover img{transform:scale(1.06)}
+.about-visual-tag{
+  position:absolute;bottom:24px;left:24px;
+  background:var(--red);
+  color:var(--white);
+  padding:14px 20px;
+  font-family:var(--head);
+  font-size:10px;letter-spacing:.3em;
+  text-transform:uppercase;
+  font-weight:600;
+  display:flex;align-items:center;gap:10px;
+}
+.about-visual-tag .arrow{
+  width:24px;height:1px;background:var(--white);
+  position:relative;
+}
+.about-visual-tag .arrow::after{
+  content:"";position:absolute;right:0;top:50%;
+  width:6px;height:6px;
+  border-top:1px solid var(--white);
+  border-right:1px solid var(--white);
+  transform:translateY(-50%) rotate(45deg);
+}
+.about-visual::after{
+  content:"";position:absolute;
+  top:0;left:0;width:6px;height:100%;
+  background:var(--red);
+}
+@media(max-width:880px){
+  .about{padding:80px 24px}
+  .about-grid{grid-template-columns:1fr;gap:48px}
+  .about-text{padding-right:0}
+}
+
+/* ====================================================
+   SIGNATURE
+   ==================================================== */
+.signature{
+  padding:160px 48px;
+  background:var(--ink);
+  color:var(--white);
+  position:relative;
+  overflow:hidden;
+}
+.signature::before{
+  content:"";
+  position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,.025) 0px,
+      rgba(255,255,255,.025) 1.5px,
+      transparent 1.5px,
+      transparent 7px);
+  pointer-events:none;
+}
+.signature::after{
+  content:"";
+  position:absolute;top:-200px;right:-200px;
+  width:600px;height:600px;
+  background:radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+  pointer-events:none;
+}
+.signature-head{
+  max-width:1320px;margin:0 auto 80px;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  gap:48px;flex-wrap:wrap;
+  position:relative;z-index:2;
+}
+.sig-grid{
+  max-width:1320px;margin:0 auto;
+  display:grid;grid-template-columns:1.6fr 1fr 1fr;
+  gap:20px;
+  position:relative;z-index:2;
+}
+.sig-card{
+  position:relative;overflow:hidden;
+  background:var(--noir);
+  aspect-ratio:3/4;
+ 
+  transition:transform .6s var(--ease);
+}
+.sig-card:nth-child(1){grid-row:span 1;aspect-ratio:4/5}
+.sig-card img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform 1.2s var(--ease), filter .4s var(--ease);
+  filter:brightness(.7) saturate(.95);
+}
+.sig-card:hover img{transform:scale(1.1);filter:brightness(1)}
+.sig-card::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg, transparent 30%, rgba(10,10,10,.95) 100%);
+  z-index:1;
+}
+.sig-card-body{
+  position:absolute;inset:0;
+  padding:32px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  z-index:2;
+}
+.sig-tag{
+  display:inline-block;
+  background:var(--red);
+  color:var(--white);
+  font-family:var(--head);
+  font-size:10px;letter-spacing:.3em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:6px 12px;
+  align-self:flex-start;
+  margin-bottom:16px;
+}
+.sig-name{
+  font-family:var(--display);
+  font-size:clamp(32px,3.5vw,48px);
+  line-height:1;
+  margin-bottom:10px;
+  text-transform:lowercase;
+}
+.sig-desc{
+  font-size:13px;color:rgba(255,255,255,.75);
+  line-height:1.55;max-width:300px;
+}
+.sig-price{
+  position:absolute;top:24px;right:24px;
+  background:var(--ink);
+  color:var(--white);
+  padding:10px 16px;
+  font-family:var(--head);
+  font-size:14px;font-weight:600;
+  z-index:2;
+  border:1px solid rgba(255,255,255,.15);
+}
+.sig-price::after{content:" jod";font-size:9px;letter-spacing:.15em;color:rgba(255,255,255,.5);text-transform:uppercase}
+@media(max-width:880px){
+  .signature{padding:80px 24px}
+  .sig-grid{grid-template-columns:1fr 1fr;gap:14px}
+  .sig-card:nth-child(1){grid-column:span 2;aspect-ratio:16/10}
+}
+
+/* ====================================================
+   MENU — The star of the show
+   ==================================================== */
+.menu{
+  background:var(--paper);
+  padding:160px 48px 200px;
+  position:relative;
+}
+.menu-head{
+  max-width:1320px;margin:0 auto 60px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:end;
+}
+.menu-head-left .eyebrow{padding-left:0}
+.menu-head-left .eyebrow::before{display:none}
+.menu-head-right{text-align:right}
+.menu-tabs{
+  display:flex;justify-content:flex-start;gap:8px;
+  margin:48px auto 0;max-width:1320px;flex-wrap:wrap;
+  border-bottom:2px solid var(--ink);
+  padding-bottom:0;
+}
+.menu-tab{
+  padding:16px 24px;
+  font-size:11px;letter-spacing:.25em;
+  text-transform:uppercase;
+  color:var(--ink);
+  font-weight:600;
+  border:2px solid transparent;
+  border-bottom:0;
+  background:transparent;
+  transition:all .3s var(--ease);
+  font-family:var(--head);
+  position:relative;
+  margin-bottom:-2px;
+}
+.menu-tab.active, .menu-tab:hover{color:var(--red)}
+.menu-tab.active::after{
+  content:"";position:absolute;
+  left:0;right:0;bottom:-2px;
+  height:3px;background:var(--red);
+}
+.menu-tab .num{
+  display:inline-block;
+  font-size:9px;color:var(--red);
+  margin-right:8px;opacity:.6;
+}
+.menu-grid{
+  max-width:1320px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:0 80px;
+}
+.menu-cat-title{
+  grid-column:span 2;
+  font-family:var(--display);
+  font-size:clamp(40px,5vw,64px);
+  color:var(--ink);
+  margin:80px 0 32px;
+  padding-bottom:20px;
+  border-bottom:3px solid var(--ink);
+  position:relative;
+  text-transform:lowercase;
+  display:flex;align-items:baseline;gap:24px;
+  line-height:1;
+}
+.menu-cat-title::after{
+  content:"";position:absolute;
+  left:0;bottom:-3px;
+  width:120px;height:3px;
+  background:var(--red);
+}
+.menu-cat-title:first-of-type{margin-top:48px}
+.menu-cat-title .cat-num{
+  font-family:var(--head);
+  font-size:12px;letter-spacing:.3em;
+  color:var(--red);
+  font-weight:600;
+  text-transform:uppercase;
+  align-self:flex-start;
+  margin-top:14px;
+}
+.menu-cat-title .cat-ar{
+  font-family:var(--arabic-d);
+  font-size:18px;
+  color:var(--concrete);
+  margin-left:auto;
+  font-weight:400;
+}
+.menu-item{
+  display:grid;grid-template-columns:1fr auto;
+  gap:16px;
+  padding:24px 0;
+  border-bottom:1px dashed var(--smoke);
+  transition:padding-left .3s var(--ease);
+  position:relative;
+}
+.menu-item:hover{padding-left:12px}
+.menu-item::before{
+  content:"";position:absolute;
+  left:0;top:50%;
+  width:0;height:1px;
+  background:var(--red);
+  transition:width .4s var(--ease);
+}
+.menu-item:hover::before{width:8px}
+.menu-item-main{flex:1;min-width:0}
+.menu-item-name{
+  font-family:var(--head);
+  font-size:21px;font-weight:600;
+  color:var(--ink);
+  margin-bottom:6px;
+  text-transform:lowercase;
+  display:flex;align-items:center;gap:10px;
+  flex-wrap:wrap;
+}
+.menu-item-ar{
+  font-family:var(--arabic-d);
+  font-size:14px;color:var(--concrete);
+  font-weight:400;
+}
+.menu-item-tag{
+  display:inline-block;
+  font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--white);
+  background:var(--red);
+  padding:3px 8px;
+  font-weight:600;
+  font-family:var(--head);
+}
+.menu-item-tag.gold{background:#B8860B}
+.menu-item-desc{
+  font-size:13.5px;color:var(--concrete);
+  line-height:1.5;font-weight:300;
+}
+.menu-item-price{
+  font-family:var(--head);
+  font-size:21px;color:var(--red);
+  font-weight:700;
+  white-space:nowrap;
+  align-self:start;
+  padding-top:2px;
+}
+.menu-item-price::after{content:" jod";font-size:10px;letter-spacing:.1em;color:var(--concrete);font-weight:400;margin-left:4px}
+@media(max-width:680px){
+  .menu{padding:80px 24px 100px}
+  .menu-head{grid-template-columns:1fr;gap:24px}
+  .menu-head-right{text-align:left}
+  .menu-grid{grid-template-columns:1fr;gap:0}
+  .menu-cat-title{grid-column:span 1;font-size:36px;flex-wrap:wrap;gap:12px}
+  .menu-cat-title .cat-num{margin-top:0}
+  .menu-cat-title .cat-ar{margin-left:0;width:100%}
+}
+
+/* ====================================================
+   CAKES SHOWCASE
+   ==================================================== */
+.cakes{
+  background:var(--ink);
+  padding:160px 48px;
+  color:var(--white);
+  position:relative;
+  overflow:hidden;
+}
+.cakes::before{
+  content:"";
+  position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,.03) 0px,
+      rgba(255,255,255,.03) 1.5px,
+      transparent 1.5px,
+      transparent 7px);
+  pointer-events:none;
+}
+.cakes-head{
+  max-width:1320px;margin:0 auto 80px;
+  display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:end;
+  position:relative;z-index:2;
+}
+.cakes-head .eyebrow{color:var(--red);padding-left:52px}
+.cakes-head .eyebrow::before{background:var(--red)}
+.cakes-head .section-title{color:var(--white)}
+.cakes-grid{
+  max-width:1320px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  position:relative;z-index:2;
+}
+.cake-card{
+  position:relative;overflow:hidden;
+  background:var(--noir);
+  aspect-ratio:3/4;
+  transition:transform .5s var(--ease);
+}
+.cake-card:hover{transform:translateY(-6px)}
+.cake-card img{
+  position:absolute;inset:0;
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 1.2s var(--ease), filter .4s var(--ease);
+  filter:brightness(.8);
+}
+.cake-card:hover img{transform:scale(1.1);filter:brightness(1)}
+.cake-card::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg, transparent 40%, rgba(10,10,10,.95) 100%);
+  z-index:1;
+}
+.cake-card-body{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:32px;
+  z-index:2;
+}
+.cake-name{
+  font-family:var(--display);
+  font-size:clamp(28px,2.4vw,36px);
+  line-height:1;margin-bottom:8px;
+  text-transform:lowercase;
+}
+.cake-desc{
+  font-size:13px;color:rgba(255,255,255,.7);
+  line-height:1.5;margin-bottom:14px;
+}
+.cake-price{
+  display:inline-block;
+  background:var(--red);
+  color:var(--white);
+  padding:8px 14px;
+  font-family:var(--head);
+  font-size:13px;font-weight:600;
+  letter-spacing:.05em;
+}
+.cake-price::after{content:" jod";font-size:9px;letter-spacing:.15em;margin-left:4px;opacity:.8}
+.cake-badge{
+  position:absolute;top:20px;left:20px;
+  background:var(--red);
+  color:var(--white);
+  padding:6px 12px;
+  font-family:var(--head);
+  font-size:10px;letter-spacing:.25em;
+  text-transform:uppercase;
+  font-weight:600;
+  z-index:2;
+}
+@media(max-width:880px){
+  .cakes{padding:80px 24px}
+  .cakes-head{grid-template-columns:1fr;gap:24px}
+  .cakes-grid{grid-template-columns:1fr 1fr;gap:14px}
+}
+
+/* ====================================================
+   PROCESS — How we brew
+   ==================================================== */
+.process{
+  background:var(--red);
+  color:var(--white);
+  padding:160px 48px;
+  position:relative;
+  overflow:hidden;
+}
+.process::before, .process::after{
+  content:"";
+  position:absolute;left:0;right:0;height:10px;
+  background:repeating-linear-gradient(90deg, var(--ink) 0 20px, transparent 20px 40px);
+}
+.process::before{top:0}
+.process::after{bottom:0}
+.process-head{
+  max-width:1320px;margin:0 auto 80px;text-align:center;
+  position:relative;z-index:2;
+}
+.process-head .eyebrow{color:var(--ink);padding-left:52px}
+.process-head .eyebrow::before{background:var(--ink)}
+.process-head .section-title{color:var(--white)}
+.process-head .section-title .red{color:var(--ink)}
+.process-grid{
+  max-width:1320px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;
+  position:relative;z-index:2;
+  border-top:2px solid var(--ink);
+  border-bottom:2px solid var(--ink);
+}
+.process-step{
+  padding:48px 32px;
+  border-right:2px solid var(--ink);
+  position:relative;
+  transition:background .3s var(--ease);
+}
+.process-step:last-child{border-right:0}
+.process-step:hover{background:var(--ink)}
+.process-step-num{
+  font-family:var(--display);
+  font-size:80px;
+  line-height:1;
+  color:var(--ink);
+  margin-bottom:24px;
+  display:block;
+  transition:color .3s var(--ease);
+}
+.process-step:hover .process-step-num{color:var(--red)}
+.process-step-title{
+  font-family:var(--display);
+  font-size:28px;
+  text-transform:lowercase;
+  margin-bottom:12px;
+  line-height:1;
+}
+.process-step-desc{
+  font-size:13.5px;line-height:1.6;
+  color:rgba(10,10,10,.85);
+  font-weight:400;
+}
+.process-step:hover .process-step-desc{color:rgba(255,255,255,.75)}
+@media(max-width:880px){
+  .process{padding:80px 24px}
+  .process-grid{grid-template-columns:1fr 1fr}
+  .process-step{border-right:0;border-bottom:2px solid var(--ink)}
+  .process-step:nth-child(2n){border-right:0}
+  .process-step:nth-last-child(-n+2){border-bottom:0}
+}
+
+/* ====================================================
+   GALLERY
+   ==================================================== */
+.gallery{
+  background:var(--paper);
+  padding:160px 48px;
+}
+.gallery-head{
+  max-width:1320px;margin:0 auto 60px;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  gap:32px;flex-wrap:wrap;
+}
+.gallery-grid{
+  max-width:1480px;margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:repeat(2,280px);
+  gap:14px;
+}
+.gal{
+  overflow:hidden;position:relative;
+  background:var(--ink);
+  
+}
+.gal img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform 1.4s var(--ease), filter .4s var(--ease);
+  filter:saturate(.95);
+}
+.gal:hover img{transform:scale(1.1);filter:saturate(1.1)}
+.gal::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg, transparent 60%, rgba(225,29,42,.5) 100%);
+  opacity:0;transition:opacity .5s var(--ease);
+}
+.gal:hover::after{opacity:1}
+.gal-1{grid-column:span 2;grid-row:span 2}
+@media(max-width:880px){
+  .gallery{padding:80px 24px}
+  .gallery-grid{
+    grid-template-columns:repeat(2,1fr);
+    grid-template-rows:repeat(4,200px);
+  }
+  .gal-1{grid-column:span 2;grid-row:span 1}
+}
+
+/* ====================================================
+   REVIEWS
+   ==================================================== */
+.reviews{
+  background:var(--ink);
+  color:var(--white);
+  padding:160px 48px;
+  position:relative;
+  overflow:hidden;
+}
+.reviews::before{
+  content:"\201C";
+  position:absolute;top:40px;left:50%;
+  transform:translateX(-50%);
+  font-family:var(--display);
+  font-size:500px;
+  color:rgba(225,29,42,.08);
+  line-height:1;pointer-events:none;
+}
+.reviews-head{
+  max-width:1320px;margin:0 auto 60px;
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;
+  position:relative;z-index:2;
+}
+.reviews-head .eyebrow{color:var(--red);padding-left:52px}
+.reviews-head .eyebrow::before{background:var(--red)}
+.reviews-head .section-title{color:var(--white)}
+.reviews-rating{
+  display:flex;align-items:center;gap:24px;
+  flex-wrap:wrap;justify-content:flex-end;
+}
+.reviews-score{
+  font-family:var(--display);
+  font-size:clamp(72px,8vw,120px);
+  color:var(--red);
+  line-height:.9;
+}
+.reviews-score sup{font-size:24px;color:rgba(255,255,255,.5);vertical-align:super}
+.reviews-meta{text-align:left}
+.reviews-stars{color:var(--red);font-size:20px;letter-spacing:4px;margin-bottom:4px}
+.reviews-count{font-size:13px;color:rgba(255,255,255,.6);letter-spacing:.05em}
+.reviews-grid{
+  max-width:1320px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;position:relative;z-index:2;
+}
+.review{
+  background:var(--noir);
+  border:1px solid rgba(255,255,255,.06);
+  padding:40px 36px;
+  position:relative;
+  transition:transform .4s var(--ease), border-color .4s var(--ease);
+}
+.review:hover{transform:translateY(-6px);border-color:var(--red)}
+.review::before{
+  content:"";position:absolute;top:0;left:0;
+  width:56px;height:3px;background:var(--red);
+}
+.review-stars{color:var(--red);font-size:14px;letter-spacing:3px;margin-bottom:20px}
+.review-text{
+  font-family:var(--head);
+  font-size:17px;line-height:1.6;
+  color:rgba(255,255,255,.92);
+  font-weight:400;
+  margin-bottom:24px;
+  min-height:120px;
+}
+.review-author{
+  display:flex;align-items:center;gap:14px;
+  border-top:1px solid rgba(255,255,255,.08);
+  padding-top:20px;
+}
+.review-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--red);
+  color:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);
+  font-size:18px;
+}
+.review-name{font-size:14px;font-weight:500;color:var(--white)}
+.review-when{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.1em}
+@media(max-width:880px){
+  .reviews{padding:80px 24px}
+  .reviews-head{grid-template-columns:1fr;gap:24px}
+  .reviews-rating{justify-content:flex-start}
+  .reviews-grid{grid-template-columns:1fr;gap:14px}
+}
+
+/* ====================================================
+   VISIT
+   ==================================================== */
+.visit{
+  background:var(--white);
+  padding:160px 48px;
+  position:relative;
+  overflow:hidden;
+}
+.visit::before{
+  content:"";
+  position:absolute;top:0;right:0;
+  width:40%;height:100%;
+  background:linear-gradient(135deg, transparent 60%, var(--red-soft) 100%);
+  z-index:0;pointer-events:none;
+}
+.visit-grid{
+  max-width:1320px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:start;
+  position:relative;z-index:2;
+}
+.visit-info{
+  display:grid;gap:0;margin-top:48px;
+}
+.visit-row{
+  display:grid;grid-template-columns:130px 1fr;
+  gap:24px;
+  padding:28px 0;
+  border-top:1px solid var(--line);
+  align-items:start;
+}
+.visit-row:last-child{border-bottom:1px solid var(--line)}
+.visit-label{
+  font-size:10px;letter-spacing:.35em;
+  text-transform:uppercase;
+  color:var(--red);
+  font-weight:600;
+  padding-top:6px;
+  font-family:var(--head);
+}
+.visit-value{
+  font-family:var(--head);
+  font-size:22px;font-weight:500;
+  line-height:1.4;
+  color:var(--ink);
+}
+.visit-value a{
+  border-bottom:2px solid var(--red);
+  transition:color .3s var(--ease);
+}
+.visit-value a:hover{color:var(--red)}
+.visit-value-sub{
+  font-family:var(--body);
+  font-size:13px;
+  color:var(--concrete);
+  display:block;margin-top:6px;
+  line-height:1.5;font-weight:300;
+}
+.visit-value-open{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--display);
+  font-size:24px;
+  color:var(--red);
+  margin-top:6px;
+}
+.visit-value-open::before{
+  content:"";width:10px;height:10px;background:var(--red);
+  border-radius:50%;
+  animation:pulse-red 2s ease-in-out infinite;
+}
+@keyframes pulse-red{
+  0%,100%{box-shadow:0 0 0 0 var(--red-glow)}
+  50%{box-shadow:0 0 0 10px transparent}
+}
+.visit-social{
+  display:flex;gap:12px;margin-top:40px;flex-wrap:wrap;
+}
+.visit-social a{
+  width:50px;height:50px;
+  border:2px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s var(--ease);
+  color:var(--ink);
+}
+.visit-social a:hover{background:var(--red);border-color:var(--red);color:var(--white);transform:translateY(-3px)}
+.visit-social svg{width:18px;height:18px}
+.visit-map{
+  aspect-ratio:1/1;
+  background:var(--ink);
+  position:relative;overflow:hidden;
+}
+.visit-map iframe{
+  width:100%;height:100%;border:0;
+  filter:grayscale(.7) contrast(1.1);
+}
+.visit-map-overlay{
+  position:absolute;top:24px;left:24px;
+  background:var(--red);
+  color:var(--white);
+  padding:14px 20px;
+  font-size:10px;letter-spacing:.3em;
+  text-transform:uppercase;
+  font-weight:600;
+  font-family:var(--head);
+  display:flex;align-items:center;gap:10px;
+}
+.visit-map-overlay .dot{
+  width:8px;height:8px;background:var(--white);border-radius:50%;
+  animation:pulse-red 2s ease-in-out infinite;
+}
+.visit-map::after{
+  content:"";position:absolute;
+  bottom:0;left:0;right:0;height:6px;
+  background:var(--red);
+}
+@media(max-width:880px){
+  .visit{padding:80px 24px}
+  .visit-grid{grid-template-columns:1fr;gap:48px}
+  .visit-row{grid-template-columns:1fr;gap:12px}
+}
+
+/* ====================================================
+   FOOTER
+   ==================================================== */
+.footer{
+  background:var(--ink);
+  color:rgba(255,255,255,.55);
+  padding:80px 48px 28px;
+  position:relative;z-index:2;
+  border-top:1px solid var(--line-dark);
+}
+.footer-grid{
+  max-width:1320px;margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px;padding-bottom:48px;
+  border-bottom:1px solid var(--line-dark);
+}
+.footer-brand{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:20px;
+}
+.footer-brand-mark{
+  width:48px;height:48px;
+  background:var(--red);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);
+  font-size:26px;
+  color:var(--white);
+  transform:rotate(-3deg);
+  position:relative;
+}
+.footer-brand-mark::after{
+  content:"";position:absolute;inset:3px;
+  border:1px solid rgba(255,255,255,.3);
+}
+.footer-brand-text{
+  font-family:var(--display);
+  font-size:36px;
+  color:var(--white);
+  letter-spacing:.04em;
+  text-transform:lowercase;
+}
+.footer-tag{
+  font-size:14px;max-width:340px;line-height:1.7;
+  color:rgba(255,255,255,.5);
+  font-weight:300;
+}
+.footer-tag-script{
+  font-family:var(--script);
+  font-size:24px;
+  color:var(--red);
+  margin-top:12px;
+  display:inline-block;
+}
+.footer-col h4{
+  font-size:11px;letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:22px;
+  font-weight:600;
+  font-family:var(--head);
+}
+.footer-col a{
+  display:block;font-size:13.5px;margin-bottom:12px;
+  color:rgba(255,255,255,.65);
+  transition:color .3s var(--ease), padding-left .3s var(--ease);
+}
+.footer-col a:hover{color:var(--white);padding-left:6px}
+.footer-bottom{
+  max-width:1320px;margin:28px auto 0;
+  display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:16px;
+  font-size:11px;letter-spacing:.15em;
+  color:rgba(255,255,255,.35);
+}
+@media(max-width:680px){
+  .footer{padding:60px 24px 24px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:36px}
+  .footer-brand-text{font-size:30px}
+  .footer-bottom{justify-content:center;text-align:center}
+}
+
+/* ====================================================
+   FLOATING ELEMENTS
+   ==================================================== */
+.floating-order{
+  position:fixed;bottom:24px;right:24px;z-index:90;
+  background:var(--red);
+  color:var(--white);
+  padding:16px 24px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:var(--shadow-red);
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  font-weight:600;
+  transition:all .4s var(--ease);
+  opacity:0;transform:translateY(20px);
+  pointer-events:none;
+}
+.floating-order.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.floating-order:hover{background:var(--red-deep);transform:translateY(-3px) scale(1.02)}
+.floating-order-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--white);
+  box-shadow:0 0 0 4px rgba(255,255,255,.3);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 4px rgba(255,255,255,.3)}
+  50%{box-shadow:0 0 0 10px transparent}
+}
+@media (max-width:880px){.floating-order{bottom:16px;right:16px;left:16px;justify-content:center}}
+
+/* ====================================================
+   REVEAL ANIMATIONS
+   ==================================================== */
+.reveal{
+  opacity:0;transform:translateY(40px);
+  transition:opacity 1s var(--ease), transform 1s var(--ease);
+}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important}
+}
+</style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+  <div class="preloader-logo">aj<span class="a">d</span>a</div>
+  <div class="preloader-bar"></div>
+  <div class="preloader-sub">the returning vibes</div>
+  <div class="preloader-tag">Brewing specialty coffee</div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav-logo">
+    <div class="nav-logo-mark">a</div>
+    <div class="nav-logo-text">aj<em>d</em>a</div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#about" class="nav-link">Story</a>
+    <a href="#signature" class="nav-link">Signature</a>
+    <a href="#menu" class="nav-link">Menu</a>
+    <a href="#cakes" class="nav-link">Cakes</a>
+    <a href="#gallery" class="nav-link">Gallery</a>
+    <a href="#reviews" class="nav-link">Reviews</a>
+    <a href="#visit" class="nav-link">Visit</a>
+    <a href="https://www.talabat.com/jordan/restaurant/740116/ajda-coffee-bakery-al-sareeh" target="_blank" rel="noopener" class="nav-order">
+      Order Now
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="nav-toggle" id="navToggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Irbid · Open 24 Hours · Since The First Brew</div>
+    <h1 class="hero-title">
+      <span class="word">there is</span>
+      <span class="word">ajda.</span>
+      <span class="word">and only</span>
+    </h1>
+    <span class="hero-script">the returning vibes</span>
+    <div class="hero-title-ar">أَجْدَا — قَهْوَة خَاصَّة وَمَخْبَز</div>
+    <p class="hero-tagline">A quiet corner of Irbid that smells like home. Specialty coffee, fresh pastries, and a community that never sleeps — every hour, every day.</p>
+    <div class="hero-cta-row">
+      <a href="#menu" class="btn btn-primary"><span>Explore the Menu
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </span></a>
+      <a href="#visit" class="btn btn-ghost">Find Us</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-cups">
+      <div class="cup cup-1">
+        <div class="cup-logo">
+          <span class="ar">أَجْدَا</span>
+          <span class="en">ajda coffee & bakery</span>
+        </div>
+      </div>
+      <div class="cup cup-2">
+        <div class="cup-logo">
+          <span class="ar">أَجْدَا</span>
+          <span class="en">ajda</span>
+        </div>
+      </div>
+      <div class="steam"><span></span><span></span><span></span></div>
+      <div class="bean"></div>
+      <div class="bean"></div>
+      <div class="bean"></div>
+      <div class="bean"></div>
+      <div class="bean"></div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+  <div class="hero-marquee" aria-hidden="true">
+    <div class="hero-marquee-inner">
+      <span><em></em>Specialty Coffee</span>
+      <span><em></em>24 Hours Open</span>
+      <span><em></em>Fresh Bakery</span>
+      <span><em></em>Single Origin</span>
+      <span><em></em>Irbid · Jordan</span>
+      <span><em></em>Hand-Pulled Espresso</span>
+      <span><em></em>The Returning Vibes</span>
+      <span><em></em>Specialty Coffee</span>
+      <span><em></em>24 Hours Open</span>
+      <span><em></em>Fresh Bakery</span>
+      <span><em></em>Single Origin</span>
+      <span><em></em>Irbid · Jordan</span>
+      <span><em></em>Hand-Pulled Espresso</span>
+      <span><em></em>The Returning Vibes</span>
+    </div>
+  </div>
+</header>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="reveal">
+      <div class="stat-num">4.8<small>★</small></div>
+      <div class="stat-label">Google Rating</div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="stat-num">4,916</div>
+      <div class="stat-label">Reviews</div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="stat-num">24<small>/7</small></div>
+      <div class="stat-label">Always Open</div>
+    </div>
+    <div class="reveal reveal-delay-3">
+      <div class="stat-num">1–5<small>jod</small></div>
+      <div class="stat-label">Per Person</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <span class="eyebrow">Our Story</span>
+      <h2 class="section-title">a quiet corner of <span class="red">irbid</span> that smells like home.</h2>
+      <p class="section-lead">AJDA began with a simple idea — that the best conversations happen in the soft hum of an espresso machine, in a room warm enough to forget the time. We pour that feeling into every cup.</p>
+      <blockquote class="about-ar">
+        مَعَ بِيئَتِنَا الدَّافِئَة وَالهَادِئَة وَمَجْمُوعَتِنَا المُتَنَوِّعَة مِنَ المَشْرُوبَات وَالحَلْوِيَّات اللَّذِيذَة، يُمْكِنُكَ الاسْتِمْتَاع بِتَجْرِبَة لَا تُنْسَى فِي أَجْدَا كَافِيه.
+      </blockquote>
+      <p class="section-lead">We care about meeting expectations and delivering the highest level of service — every visit, every order, every hour of the day.</p>
+      <div class="about-pill-row">
+        <div class="about-pill"><span class="dot"></span>Open 24/7</div>
+        <div class="about-pill"><span class="dot"></span>Specialty Coffee</div>
+        <div class="about-pill"><span class="dot"></span>Fresh Bakery</div>
+        <div class="about-pill"><span class="dot"></span>Single Origin</div>
+      </div>
+    </div>
+    <div class="about-visual reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=1400&q=80&auto=format&fit=crop" alt="AJDA coffee shop interior with corrugated metal wall and warm lighting" loading="lazy"/>
+      <div class="about-visual-tag">Since the first brew <span class="arrow"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE -->
+<section class="signature metal" id="signature">
+  <div class="signature-head">
+    <div class="reveal">
+      <span class="eyebrow light" style="color:var(--red)">Signature</span>
+      <h2 class="section-title" style="color:var(--white)">crafted to be <em>remembered</em>.</h2>
+    </div>
+    <p class="section-lead light reveal reveal-delay-1">Three drinks our regulars come back for. Made by hand, one cup at a time.</p>
+  </div>
+  <div class="sig-grid">
+    <div class="sig-card reveal">
+      <div class="sig-price">2.50</div>
+      <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=1400&q=80&auto=format&fit=crop" alt="Spanish Latte" loading="lazy"/>
+      <div class="sig-card-body">
+        <div class="sig-tag">★ Most loved</div>
+        <h3 class="sig-name">spanish latte</h3>
+        <p class="sig-desc">Sweetened condensed milk folded through a double ristretto. Silky, mellow, the kind of cup you cradle for an hour.</p>
+      </div>
+    </div>
+    <div class="sig-card reveal reveal-delay-1">
+      <div class="sig-price">3.00</div>
+      <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=1000&q=80&auto=format&fit=crop" alt="Rose Cardamom Latte" loading="lazy"/>
+      <div class="sig-card-body">
+        <div class="sig-tag">House pour</div>
+        <h3 class="sig-name">rose cardamom</h3>
+        <p class="sig-desc">A nod to the region — floral, gently spiced, quietly luxurious.</p>
+      </div>
+    </div>
+    <div class="sig-card reveal reveal-delay-2">
+      <div class="sig-price">1.75</div>
+      <img src="https://images.unsplash.com/photo-1555506296-9c016d3a6ef9?w=1000&q=80&auto=format&fit=crop" alt="Butter Croissant" loading="lazy"/>
+      <div class="sig-card-body">
+        <div class="sig-tag">From the bakery</div>
+        <h3 class="sig-name">butter croissant</h3>
+        <p class="sig-desc">72 layers, baked at dawn. Shatter on the outside, soft as a whisper inside.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU — THE STAR OF THE SHOW -->
+<section class="menu" id="menu">
+  <div class="menu-head">
+    <div class="menu-head-left reveal">
+      <span class="eyebrow">The Menu</span>
+      <h2 class="section-title">small list. <span class="red">big</span> care.</h2>
+    </div>
+    <div class="menu-head-right reveal reveal-delay-1">
+      <p class="section-lead" style="margin-left:auto">Every item is made fresh, every recipe is made by us. No shortcuts, no compromises. Specialty coffee, baked-from-scratch pastries, and the warmest cup in Irbid.</p>
+    </div>
+  </div>
+
+  <div class="menu-tabs" role="tablist">
+    <button class="menu-tab active" data-cat="hot"><span class="num">01</span>Hot Coffee</button>
+    <button class="menu-tab" data-cat="cold"><span class="num">02</span>Iced & Cold</button>
+    <button class="menu-tab" data-cat="tea"><span class="num">03</span>Tea & Specialty</button>
+    <button class="menu-tab" data-cat="bakery"><span class="num">04</span>Bakery & Bites</button>
+  </div>
+
+  <div class="menu-grid" id="menuGrid">
+    <!-- HOT COFFEE -->
+    <h3 class="menu-cat-title" data-cat="hot">
+      <span class="cat-num">Cat 01</span>
+      <span>espresso & milk</span>
+      <span class="cat-ar">إِسْبْرِيسو وَحَلِيب</span>
+    </h3>
+
+    <div class="menu-item" data-cat="hot">
+      <div class="menu-item-main">
+        <div class="menu-item-name">espresso <span class="menu-item-tag">classic</span></div>
+        <div class="menu-item-desc">Single origin, pulled short and clean. A small, honest shot.</div>
+      </div>
+      <div class="menu-item-price">1.00</div>
+    </div>
+    <div class="menu-item" data-cat="hot">
+      <div class="menu-item-main">
+        <div class="menu-item-name">macchiato</div>
+        <div class="menu-item-desc">Espresso topped with a kiss of milk foam.</div>
+      </div>
+      <div class="menu-item-price">1.25</div>
+    </div>
+    <div class="menu-item" data-cat="hot">
+      <div class="menu-item-main">
+        <div class="menu-item-name">americano</div>
+        <div class="menu-item-desc">Espresso lengthened with hot water. Smooth and simple.</div>
+      </div>
+      <div class="menu-item-price">1.50</div>
+    </div>
+    <div class="menu-item" data-cat="hot">
+      <div class="menu-item-main">
+        <div class="menu-item-name">cappuccino</div>
+        <div class="menu-item-desc">Velvety steamed milk, a heart of espresso, cocoa dust.</div>
+      </div>
+      <div class="menu-item-price">1.75</div>
+    </div>
+    <div class="menu-item" data-cat="hot">
+      <div class="menu-item-main">
+        <div class="menu-item-name">turkish coffee</div>
+        <div class="menu-item-desc">Slow-brewed in cezve, thick and aromatic, served with water.</div>
+      </div>
+      <div class="menu-item-price">1.50</div>
+    </div>
+    <div class="menu-item" data-cat="hot">
+      <div class="menu-item-main">
+        <div class="menu-item-name">café latte</div>
+        <div class="menu-item-desc">A long, easy pour. The classic morning companion.</div>
+      </div>
+      <div class="menu-item-price">2.00</div>
+    </div>
+    <div class="menu-item" data-cat="hot">
+      <div class="menu-item-main">
+        <div class="menu-item-name">flat white</div>
+        <div class="menu-item-desc">Silky microfoam over a double ristretto. Strong and smooth.</div>
+      </div>
+      <div class="menu-item-price">2.00</div>
+    </div>
+    <div class="menu-item" data-cat="hot">
+      <div class="menu-item-main">
+        <div class="menu-item-name">spanish latte <span class="menu-item-tag">★ bestseller</span></div>
+        <div class="menu-item-desc">Sweetened condensed milk, double ristretto. Our most-loved cup.</div>
+      </div>
+      <div class="menu-item-price">2.50</div>
+    </div>
+    <div class="menu-item" data-cat="hot">
+      <div class="menu-item-main">
+        <div class="menu-item-name">mocha</div>
+        <div class="menu-item-desc">Bitter cocoa meets bold espresso, with steamed milk.</div>
+      </div>
+      <div class="menu-item-price">2.50</div>
+    </div>
+    <div class="menu-item" data-cat="hot">
+      <div class="menu-item-main">
+        <div class="menu-item-name">caramel macchiato</div>
+        <div class="menu-item-desc">Espresso, vanilla, steamed milk, finished with caramel drizzle.</div>
+      </div>
+      <div class="menu-item-price">2.75</div>
+    </div>
+    <div class="menu-item" data-cat="hot">
+      <div class="menu-item-main">
+        <div class="menu-item-name">hot chocolate</div>
+        <div class="menu-item-desc">Real melted chocolate, milk, optional whipped cream.</div>
+      </div>
+      <div class="menu-item-price">2.25</div>
+    </div>
+
+    <!-- ICED & COLD -->
+    <h3 class="menu-cat-title" data-cat="cold">
+      <span class="cat-num">Cat 02</span>
+      <span>iced & cold</span>
+      <span class="cat-ar">مَشْرُوبَات بَارِدَة</span>
+    </h3>
+
+    <div class="menu-item" data-cat="cold">
+      <div class="menu-item-main">
+        <div class="menu-item-name">iced americano</div>
+        <div class="menu-item-desc">Cold, clean, refreshing. Espresso lengthened over ice.</div>
+      </div>
+      <div class="menu-item-price">1.75</div>
+    </div>
+    <div class="menu-item" data-cat="cold">
+      <div class="menu-item-main">
+        <div class="menu-item-name">iced latte</div>
+        <div class="menu-item-desc">Cold milk, ice, a slow pour of espresso over the top.</div>
+      </div>
+      <div class="menu-item-price">2.25</div>
+    </div>
+    <div class="menu-item" data-cat="cold">
+      <div class="menu-item-main">
+        <div class="menu-item-name">iced mocha</div>
+        <div class="menu-item-desc">Chocolate, espresso, milk, ice. Dessert in a glass.</div>
+      </div>
+      <div class="menu-item-price">2.75</div>
+    </div>
+    <div class="menu-item" data-cat="cold">
+      <div class="menu-item-main">
+        <div class="menu-item-name">iced spanish latte <span class="menu-item-tag">★ bestseller</span></div>
+        <div class="menu-item-desc">The most-loved cup, served cold.</div>
+      </div>
+      <div class="menu-item-price">2.75</div>
+    </div>
+    <div class="menu-item" data-cat="cold">
+      <div class="menu-item-main">
+        <div class="menu-item-name">iced caramel macchiato</div>
+        <div class="menu-item-desc">Vanilla, milk, espresso, ice, drizzled caramel.</div>
+      </div>
+      <div class="menu-item-price">3.00</div>
+    </div>
+    <div class="menu-item" data-cat="cold">
+      <div class="menu-item-main">
+        <div class="menu-item-name">cold brew</div>
+        <div class="menu-item-desc">Steeped 18 hours. Smooth, low-acid, naturally sweet.</div>
+      </div>
+      <div class="menu-item-price">2.50</div>
+    </div>
+    <div class="menu-item" data-cat="cold">
+      <div class="menu-item-main">
+        <div class="menu-item-name">frappé</div>
+        <div class="menu-item-desc">Blended espresso, ice, milk. Topped with whipped cream.</div>
+      </div>
+      <div class="menu-item-price">3.00</div>
+    </div>
+    <div class="menu-item" data-cat="cold">
+      <div class="menu-item-main">
+        <div class="menu-item-name">affogato</div>
+        <div class="menu-item-desc">A scoop of vanilla gelato drowned in a hot double shot.</div>
+      </div>
+      <div class="menu-item-price">3.50</div>
+    </div>
+    <div class="menu-item" data-cat="cold">
+      <div class="menu-item-main">
+        <div class="menu-item-name">mojito mocktail</div>
+        <div class="menu-item-desc">Mint, lime, soda. The non-coffee house favorite.</div>
+      </div>
+      <div class="menu-item-price">2.50</div>
+    </div>
+    <div class="menu-item" data-cat="cold">
+      <div class="menu-item-main">
+        <div class="menu-item-name">fresh lemon mint</div>
+        <div class="menu-item-desc">Crushed ice, lemon, fresh mint. Summer in a cup.</div>
+      </div>
+      <div class="menu-item-price">2.00</div>
+    </div>
+    <div class="menu-item" data-cat="cold">
+      <div class="menu-item-main">
+        <div class="menu-item-name">strawberry smoothie</div>
+        <div class="menu-item-desc">Real fruit, yogurt, a touch of honey.</div>
+      </div>
+      <div class="menu-item-price">3.00</div>
+    </div>
+    <div class="menu-item" data-cat="cold">
+      <div class="menu-item-main">
+        <div class="menu-item-name">mango smoothie</div>
+        <div class="menu-item-desc">Ripe mango, yogurt, ice. Bright and tropical.</div>
+      </div>
+      <div class="menu-item-price">3.00</div>
+    </div>
+
+    <!-- TEA & SPECIALTY -->
+    <h3 class="menu-cat-title" data-cat="tea">
+      <span class="cat-num">Cat 03</span>
+      <span>tea & specialty</span>
+      <span class="cat-ar">شَاي وَخُصُوصِيَّات</span>
+    </h3>
+
+    <div class="menu-item" data-cat="tea">
+      <div class="menu-item-main">
+        <div class="menu-item-name">karak tea</div>
+        <div class="menu-item-desc">Strong black tea, condensed milk, cardamom. Gulf-style.</div>
+      </div>
+      <div class="menu-item-price">1.50</div>
+    </div>
+    <div class="menu-item" data-cat="tea">
+      <div class="menu-item-main">
+        <div class="menu-item-name">karak with milk</div>
+        <div class="menu-item-desc">Karak done the milky, soft way. Comfort in a cup.</div>
+      </div>
+      <div class="menu-item-price">1.75</div>
+    </div>
+    <div class="menu-item" data-cat="tea">
+      <div class="menu-item-main">
+        <div class="menu-item-name">earl grey</div>
+        <div class="menu-item-desc">Bergamot, black tea, hot water, a slice of lemon.</div>
+      </div>
+      <div class="menu-item-price">1.50</div>
+    </div>
+    <div class="menu-item" data-cat="tea">
+      <div class="menu-item-main">
+        <div class="menu-item-name">green tea</div>
+        <div class="menu-item-desc">Light, grassy, calming. Pure leaf, hot or iced.</div>
+      </div>
+      <div class="menu-item-price">1.50</div>
+    </div>
+    <div class="menu-item" data-cat="tea">
+      <div class="menu-item-main">
+        <div class="menu-item-name">fresh mint tea</div>
+        <div class="menu-item-desc">Fresh mint, hot water, a quiet ritual.</div>
+      </div>
+      <div class="menu-item-price">1.75</div>
+    </div>
+    <div class="menu-item" data-cat="tea">
+      <div class="menu-item-main">
+        <div class="menu-item-name">sahlab</div>
+        <div class="menu-item-desc">Warm milk pudding, orchid root, cinnamon, coconut.</div>
+      </div>
+      <div class="menu-item-price">2.50</div>
+    </div>
+    <div class="menu-item" data-cat="tea">
+      <div class="menu-item-main">
+        <div class="menu-item-name">chai latte</div>
+        <div class="menu-item-desc">Spiced black tea, steamed milk, honey, a touch of cinnamon.</div>
+      </div>
+      <div class="menu-item-price">2.75</div>
+    </div>
+    <div class="menu-item" data-cat="tea">
+      <div class="menu-item-main">
+        <div class="menu-item-name">matcha latte</div>
+        <div class="menu-item-desc">Ceremonial-grade matcha whisked with steamed milk.</div>
+      </div>
+      <div class="menu-item-price">3.00</div>
+    </div>
+    <div class="menu-item" data-cat="tea">
+      <div class="menu-item-main">
+        <div class="menu-item-name">rose cardamom latte</div>
+        <div class="menu-item-desc">Floral, gently spiced, our local twist on a classic.</div>
+      </div>
+      <div class="menu-item-price">3.00</div>
+    </div>
+
+    <!-- BAKERY & BITES -->
+    <h3 class="menu-cat-title" data-cat="bakery">
+      <span class="cat-num">Cat 04</span>
+      <span>bakery & bites</span>
+      <span class="cat-ar">مَخْبُوزَات</span>
+    </h3>
+
+    <div class="menu-item" data-cat="bakery">
+      <div class="menu-item-main">
+        <div class="menu-item-name">butter croissant</div>
+        <div class="menu-item-desc">72 layers, baked at dawn. Plain, or stuffed.</div>
+      </div>
+      <div class="menu-item-price">1.75</div>
+    </div>
+    <div class="menu-item" data-cat="bakery">
+      <div class="menu-item-main">
+        <div class="menu-item-name">chocolate croissant</div>
+        <div class="menu-item-desc">Pain au chocolat — a bar of dark chocolate folded into the dough.</div>
+      </div>
+      <div class="menu-item-price">2.00</div>
+    </div>
+    <div class="menu-item" data-cat="bakery">
+      <div class="menu-item-main">
+        <div class="menu-item-name">almond croissant</div>
+        <div class="menu-item-desc">Frangipane filling, toasted almonds, dusted with sugar.</div>
+      </div>
+      <div class="menu-item-price">2.25</div>
+    </div>
+    <div class="menu-item" data-cat="bakery">
+      <div class="menu-item-main">
+        <div class="menu-item-name">cheese manakeesh</div>
+        <div class="menu-item-desc">Soft dough, Akkawi cheese, fresh za'atar on top.</div>
+      </div>
+      <div class="menu-item-price">1.50</div>
+    </div>
+    <div class="menu-item" data-cat="bakery">
+      <div class="menu-item-main">
+        <div class="menu-item-name">za'atar manakeesh</div>
+        <div class="menu-item-desc">The Levantine classic. Olive oil, thyme, sumac, sesame.</div>
+      </div>
+      <div class="menu-item-price">1.25</div>
+    </div>
+    <div class="menu-item" data-cat="bakery">
+      <div class="menu-item-main">
+        <div class="menu-item-name">spinach manakeesh</div>
+        <div class="menu-item-desc">Sautéed spinach, onion, sumac, lemon, on warm dough.</div>
+      </div>
+      <div class="menu-item-price">1.75</div>
+    </div>
+    <div class="menu-item" data-cat="bakery">
+      <div class="menu-item-main">
+        <div class="menu-item-name">cinnamon roll</div>
+        <div class="menu-item-desc">Soft, sticky, dripping with cream cheese glaze.</div>
+      </div>
+      <div class="menu-item-price">2.25</div>
+    </div>
+    <div class="menu-item" data-cat="bakery">
+      <div class="menu-item-main">
+        <div class="menu-item-name">brownie</div>
+        <div class="menu-item-desc">Fudgy, dense, walnut-studded. A coffee's best friend.</div>
+      </div>
+      <div class="menu-item-price">1.75</div>
+    </div>
+    <div class="menu-item" data-cat="bakery">
+      <div class="menu-item-main">
+        <div class="menu-item-name">cookies (3 pcs)</div>
+        <div class="menu-item-desc">Chocolate chip, oatmeal, or butter — baked daily.</div>
+      </div>
+      <div class="menu-item-price">3.50</div>
+    </div>
+    <div class="menu-item" data-cat="bakery">
+      <div class="menu-item-main">
+        <div class="menu-item-name">muffin</div>
+        <div class="menu-item-desc">Blueberry, chocolate, or banana walnut.</div>
+      </div>
+      <div class="menu-item-price">1.75</div>
+    </div>
+  </div>
+</section>
+
+<!-- CAKES SHOWCASE -->
+<section class="cakes metal" id="cakes">
+  <div class="cakes-head">
+    <div class="reveal">
+      <span class="eyebrow">From the Cake Display</span>
+      <h2 class="section-title">sliced daily, <span class="red">loved nightly</span>.</h2>
+    </div>
+    <p class="section-lead light reveal reveal-delay-1" style="color:rgba(255,255,255,.75)">Our cake counter is the first thing you see when you walk in. Whole cakes for celebrations, single slices for a quiet moment.</p>
+  </div>
+  <div class="cakes-grid">
+    <div class="cake-card reveal">
+      <div class="cake-badge">★ Signature</div>
+      <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=1000&q=80&auto=format&fit=crop" alt="San Sebastien Cheesecake" loading="lazy"/>
+      <div class="cake-card-body">
+        <h3 class="cake-name">san sebastien cheesecake</h3>
+        <p class="cake-desc">The burnt-top Basque classic. Creamy, custardy, unforgettable.</p>
+        <span class="cake-price">3.50</span>
+      </div>
+    </div>
+    <div class="cake-card reveal reveal-delay-1">
+      <div class="cake-badge">★ Bestseller</div>
+      <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=1000&q=80&auto=format&fit=crop" alt="Lotus Cheesecake" loading="lazy"/>
+      <div class="cake-card-body">
+        <h3 class="cake-name">lotus cheesecake</h3>
+        <p class="cake-desc">Creamy cheesecake, caramelized Lotus topping, cookie base.</p>
+        <span class="cake-price">3.75</span>
+      </div>
+    </div>
+    <div class="cake-card reveal reveal-delay-2">
+      <div class="cake-badge">Rich</div>
+      <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=1000&q=80&auto=format&fit=crop" alt="Chocolate Lava Cake" loading="lazy"/>
+      <div class="cake-card-body">
+        <h3 class="cake-name">chocolate lava cake</h3>
+        <p class="cake-desc">Warm dark chocolate, molten center, vanilla ice cream on the side.</p>
+        <span class="cake-price">3.50</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS — How we brew -->
+<section class="process">
+  <div class="process-head reveal">
+    <span class="eyebrow">The Process</span>
+    <h2 class="section-title">from <span class="red">bean</span> to <span class="red">cup</span>.</h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-step reveal">
+      <span class="process-step-num">01</span>
+      <h3 class="process-step-title">single origin</h3>
+      <p class="process-step-desc">We source from the world's best coffee regions — Brazil for body, Ethiopia for brightness, Colombia for balance.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-1">
+      <span class="process-step-num">02</span>
+      <h3 class="process-step-title">small-batch roast</h3>
+      <p class="process-step-desc">Roasted locally, in small batches, to keep the bean honest and the flavor full.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-2">
+      <span class="process-step-num">03</span>
+      <h3 class="process-step-title">hand-pulled</h3>
+      <p class="process-step-desc">Every espresso is pulled by hand. Every milk is steamed to silk. No machines decide for us.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-3">
+      <span class="process-step-num">04</span>
+      <h3 class="process-step-title">served warm</h3>
+      <p class="process-step-desc">From the bar to your table in under three minutes — and never lukewarm.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-head">
+    <div class="reveal">
+      <span class="eyebrow">Moments</span>
+      <h2 class="section-title">a look <span class="red">inside</span>.</h2>
+    </div>
+    <p class="section-lead reveal reveal-delay-1">A corrugated wall, warm light, a row of red cups. The textures that make AJDA feel like AJDA.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gal gal-1 reveal">
+      <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1600&q=80&auto=format&fit=crop" alt="AJDA interior" loading="lazy"/>
+    </div>
+    <div class="gal reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1000&q=80&auto=format&fit=crop" alt="Latte art" loading="lazy"/>
+    </div>
+    <div class="gal reveal reveal-delay-2">
+      <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=1000&q=80&auto=format&fit=crop" alt="Bakery display" loading="lazy"/>
+    </div>
+    <div class="gal reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=1000&q=80&auto=format&fit=crop" alt="Coffee beans" loading="lazy"/>
+    </div>
+    <div class="gal reveal reveal-delay-2">
+      <img src="https://images.unsplash.com/photo-1517433367423-c7e5b0f35086?w=1000&q=80&auto=format&fit=crop" alt="Coffee on table" loading="lazy"/>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="reviews-head">
+    <div class="reveal">
+      <span class="eyebrow">What people say</span>
+      <h2 class="section-title">4,916 reasons to <span class="red">stay</span>.</h2>
+    </div>
+    <div class="reviews-rating reveal reveal-delay-1">
+      <div class="reviews-score">4.8<sup>★</sup></div>
+      <div class="reviews-meta">
+        <div class="reviews-stars">★ ★ ★ ★ ★</div>
+        <div class="reviews-count">Based on 4,916 Google reviews</div>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"The Spanish latte is the best I've had in Irbid. Staff always greet you with a smile, and the place is spotless. My new regular spot."</p>
+      <div class="review-author">
+        <div class="review-avatar">A</div>
+        <div>
+          <div class="review-name">Ahmad K.</div>
+          <div class="review-when">2 weeks ago · Google</div>
+        </div>
+      </div>
+    </div>
+    <div class="review reveal reveal-delay-1">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Open 24 hours — a lifesaver for night shifts. The croissants taste like Paris. Quiet, warm, perfect for studying or just being."</p>
+      <div class="review-author">
+        <div class="review-avatar">R</div>
+        <div>
+          <div class="review-name">Rana M.</div>
+          <div class="review-when">1 month ago · Google</div>
+        </div>
+      </div>
+    </div>
+    <div class="review reveal reveal-delay-2">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Honestly the only coffee shop where I feel comfortable working for hours. Wi-Fi is fast, music is low, coffee is excellent. 10/10."</p>
+      <div class="review-author">
+        <div class="review-avatar">O</div>
+        <div>
+          <div class="review-name">Omar S.</div>
+          <div class="review-when">3 weeks ago · Google</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="visit" id="visit">
+  <div class="visit-grid">
+    <div class="reveal">
+      <span class="eyebrow">Visit</span>
+      <h2 class="section-title">always <span class="red">open</span>.<br/>always welcoming.</h2>
+      <div class="visit-info">
+        <div class="visit-row">
+          <div class="visit-label">Address</div>
+          <div class="visit-value">
+            Al‑Hezam Al‑Akhadar St., Irbid, Jordan
+            <span class="visit-value-sub">Near Al‑Sareeh · Easy street parking · Find us on Google Maps</span>
+          </div>
+        </div>
+        <div class="visit-row">
+          <div class="visit-label">Hours</div>
+          <div class="visit-value">
+            <div class="visit-value-open">Open Now · 24 Hours</div>
+            <span class="visit-value-sub">7 days a week, including holidays. Pull up a chair anytime.</span>
+          </div>
+        </div>
+        <div class="visit-row">
+          <div class="visit-label">Phone</div>
+          <div class="visit-value">
+            <a href="tel:+962792670595">07 9267 0595</a>
+            <span class="visit-value-sub">Call ahead for large orders, catering, or cake pre-orders.</span>
+          </div>
+        </div>
+        <div class="visit-row">
+          <div class="visit-label">Price</div>
+          <div class="visit-value">
+            JOD 1 – 5 per person
+            <span class="visit-value-sub">Great specialty coffee, fair price. Reported by 735 guests.</span>
+          </div>
+        </div>
+      </div>
+      <div class="visit-social">
+        <a href="https://www.instagram.com/ajdacoffee/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        </a>
+        <a href="https://www.facebook.com/ajdacoffee" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9V14.9H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7c4.6-.7 8-4.7 8-9.9z"/></svg>
+        </a>
+        <a href="https://twitter.com/ajdacoffee" target="_blank" rel="noopener" aria-label="X / Twitter">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://ajdacoffee.com/" target="_blank" rel="noopener" aria-label="Website">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+        </a>
+        <a href="https://www.talabat.com/jordan/restaurant/740116/ajda-coffee-bakery-al-sareeh" target="_blank" rel="noopener" aria-label="Order on Talabat" style="background:var(--red);color:var(--white);border-color:var(--red);padding:0 16px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;font-family:var(--head);width:auto">
+          Order on Talabat →
+        </a>
+      </div>
+    </div>
+    <div class="visit-map reveal reveal-delay-1">
+      <div class="visit-map-overlay"><span class="dot"></span>📍 Irbid · Al‑Hezam</div>
+      <iframe
+        src="https://www.openstreetmap.org/export/embed.html?bbox=35.85%2C32.54%2C35.88%2C32.56&layer=mapnik&marker=32.551%2C35.864"
+        title="AJDA Coffee & Bakery location"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">
+        <div class="footer-brand-mark">a</div>
+        <div class="footer-brand-text">ajda</div>
+      </div>
+      <p class="footer-tag">Coffee & Bakery. Specialty coffee, fresh pastries, and a community that never sleeps — open every hour of every day in Irbid, Jordan.</p>
+      <span class="footer-tag-script">~ the returning vibes ~</span>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="#about">Our Story</a>
+      <a href="#signature">Signature</a>
+      <a href="#menu">The Menu</a>
+      <a href="#cakes">Cakes</a>
+      <a href="#gallery">Gallery</a>
+    </div>
+    <div class="footer-col">
+      <h4>Visit & Order</h4>
+      <a href="tel:+962792670595">07 9267 0595</a>
+      <a href="https://www.google.com/maps/search/?api=1&query=ajda+coffee+irbid" target="_blank" rel="noopener">Get Directions</a>
+      <a href="https://www.talabat.com/jordan/restaurant/740116/ajda-coffee-bakery-al-sareeh" target="_blank" rel="noopener">Order on Talabat</a>
+      <a href="https://ajdacoffee.com/" target="_blank" rel="noopener">ajdacoffee.com</a>
+    </div>
+    <div class="footer-col">
+      <h4>Follow</h4>
+      <a href="https://www.instagram.com/ajdacoffee/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/ajdacoffee" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/ajdacoffee" target="_blank" rel="noopener">X / Twitter</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 AJDA Coffee & Bakery · Irbid, Jordan</span>
+    <span>made with ❤ + espresso · the returning vibes</span>
+  </div>
+</footer>
+
+<div class="floating-order" id="floatingOrder">
+  <div class="floating-order-dot"></div>
+  <span>Order on Talabat</span>
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+</div>
+
+<script>
+/* PRELOADER */
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('preloader').classList.add('gone'), 900);
+});
+
+/* NAV SCROLL */
+const nav = document.getElementById('nav');
+const floatingOrder = document.getElementById('floatingOrder');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y > 60) nav.classList.add('solid'); else nav.classList.remove('solid');
+  if (y > 600) floatingOrder.classList.add('show'); else floatingOrder.classList.remove('show');
+}, {passive:true});
+
+/* FLOATING ORDER CLICK */
+floatingOrder.addEventListener('click', () => {
+  window.open('https://www.talabat.com/jordan/restaurant/740116/ajda-coffee-bakery-al-sareeh', '_blank');
+});
+
+/* MOBILE MENU */
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => navLinks.classList.toggle('mobile-open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('mobile-open')));
+
+/* REVEAL ON SCROLL */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, {threshold:0.10, rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* MENU TABS */
+document.querySelectorAll('.menu-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const cat = tab.dataset.cat;
+    document.querySelectorAll('.menu-item, .menu-cat-title').forEach(el => {
+      const match = el.dataset.cat === cat;
+      el.style.display = match ? '' : 'none';
+    });
+    // Smooth scroll to top of menu
+    document.getElementById('menu').scrollIntoView({behavior: 'smooth', block: 'start'});
+  });
+});
+
+/* SMOOTH ANCHOR */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (id.length > 1) {
+      const target = document.querySelector(id);
+      if (target) {
+        e.preventDefault();
+        window.scrollTo({top: target.offsetTop - 70, behavior: 'smooth'});
+      }
+    }
+  });
+});
+
+/* HERO PARALLAX */
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  if (scrolled < window.innerHeight) {
+    const heroVisual = document.querySelector('.hero-visual');
+    if (heroVisual) {
+      heroVisual.style.transform = `translateY(${scrolled * 0.15}px)`;
+    }
+  }
+}, {passive:true});
+</script>
+</body>
+</html>
